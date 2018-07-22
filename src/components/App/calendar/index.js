@@ -78,7 +78,7 @@ class Calendar extends Component {
   handleEventSave = (event) => {
     const dateParts = event.date.split('/')
     this.props.onEventAdd({
-      key: `${dateParts[1]}/${dateParts[2]}`,
+      dateKey: `${dateParts[1]}/${dateParts[2]}`,
       date: new Date(...dateParts.reverse(), event.hour, event.minute),
       name: event.name
     })
@@ -134,7 +134,7 @@ class Calendar extends Component {
           )
         })}
         <div className="calendar__events-list">
-          {events.map(event => <Event {...event} />)}
+          {events.map((event, index) => <Event key={`event_${index}`} {...event} />)}
         </div>
       </div>
     )

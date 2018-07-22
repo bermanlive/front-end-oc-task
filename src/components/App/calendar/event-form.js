@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 class EventForm extends Component {
 
   state = {
-    hour: '0',
-    minute: '0',
-    eventName: ''
+    hour: '',
+    minute: '',
+    name: ''
   }
 
   componentDidMount() {
@@ -48,9 +48,9 @@ class EventForm extends Component {
     })
   }
 
-  handleEventNameChange = (event) => {
+  handleNameChange = (event) => {
     this.setState({
-      eventName: event.target.value
+      name: event.target.value
     })
   }
 
@@ -59,7 +59,12 @@ class EventForm extends Component {
       date: this.props.target.getAttribute('data-date'),
       hour: this.state.hour,
       minute: this.state.minute,
-      name: this.state.eventName
+      name: this.state.name
+    })
+    this.setState({
+      hour: '',
+      minute: '',
+      name: ''
     })
   }
 
@@ -93,8 +98,8 @@ class EventForm extends Component {
           <input
             type="text"
             placeholder="Event name"
-            value={this.state.eventName}
-            onChange={this.handleEventNameChange}
+            value={this.state.name}
+            onChange={this.handleNameChange}
           />
         </div>
         <div className="calendar__event-form__bottom">

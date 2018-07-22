@@ -13,10 +13,10 @@ class App extends Component {
 
   handleEventAdd = (event) => {
     const { events } = this.state
-    if (!events[event.key]) {
-      events[event.key] = []
+    if (!events[event.dateKey]) {
+      events[event.dateKey] = []
     }
-    events[event.key].push(event)
+    events[event.dateKey].push(event)
     this.setState({ events })
   }
 
