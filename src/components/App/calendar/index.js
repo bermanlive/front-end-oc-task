@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import EventForm from './event-form'
 import Event from './event'
 
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+import { months } from './months.json'
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const rows = 6
