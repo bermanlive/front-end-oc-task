@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import EventForm from './event-form'
+import Event from './event'
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
@@ -81,10 +82,19 @@ class Calendar extends Component {
       date: new Date(...dateParts.reverse(), event.hour, event.minute),
       name: event.name
     })
+    this.setState({
+      eventFormVisible: false
+    })
+  }
+
+  sortEvents = (events) => {
+    return events
   }
 
   render() {
     const dates = this.getDatesArray()
+    const eventsKey = `${months.indexOf(this.state.month)}/${this.state.year}`
+    const events = this.sortEvents(this.props.events[eventsKey] || [])
     return (
       <div className="calendar">
         <EventForm
@@ -123,6 +133,9 @@ class Calendar extends Component {
             </div>
           )
         })}
+        <div className="calendar__events-list">
+          {events.map(event => <Event {...event} />)}
+        </div>
       </div>
     )
   }
