@@ -19,21 +19,22 @@ class Calendar extends Component {
   getDatesArray() {
     const { year, month } = this.state
     const dates = []
-    const todayDate = new Date()
     const firstDayThisMonth = new Date(year, months.indexOf(month), 1).getDay()
     let index = -firstDayThisMonth + 1
     do {
-      let day = new Date(year, months.indexOf(month), index)
-      const isThisMonth = day.getMonth() === months.indexOf(month)
-      const isToday = isThisMonth && (day.getDate() === todayDate.getDate())
-      dates.push({
-        isToday,
-        isThisMonth,
-        day: day.getDate()
-      })
+      let date = new Date(year, months.indexOf(month), index)
+      dates.push(date)
       index++
     } while (dates.length !== rows * days.length)
     return dates
+  }
+
+  isDateThisMonth(date) {
+    return date.getMonth() === months.indexOf(this.state.month)
+  }
+
+  isDateToday(date) {
+    return this.isDateThisMonth(date) && (date.getDate() === (new Date()).getDate())
   }
 
   handlePrevMonth = () => {
@@ -73,6 +74,15 @@ class Calendar extends Component {
     })
   }
 
+  handleEventSave = (event) => {
+    const dateParts = event.date.split('/')
+    this.props.onEventAdd({
+      key: `${dateParts[1]}/${dateParts[2]}`,
+      date: new Date(...dateParts.reverse(), event.hour, event.minute),
+      name: event.name
+    })
+  }
+
   render() {
     const dates = this.getDatesArray()
     return (
@@ -80,6 +90,7 @@ class Calendar extends Component {
         <EventForm
           target={this.state.eventFormTarget}
           visible={this.state.eventFormVisible}
+          onSave={this.handleEventSave}
         />
         <div className="calendar__header">
           <div>{this.state.month}</div>
@@ -90,20 +101,22 @@ class Calendar extends Component {
             {days.map(day => <div key={day} className="calendar__week-cell">{day.substring(0, 2)}</div>)}
           </div>
         </div>
-        {(new Array(rows)).fill().map((_, rowIndex) => {
+        {(new Array(rows)).fill().map((_, row) => {
           return (
-            <div key={rowIndex} className="calendar__row">
-              {(new Array(days.length)).fill().map((_, columnIndex) => {
-                const cellIndex = rowIndex * days.length + columnIndex
-                const cellActiveClass = dates[cellIndex].isToday ? 'calendar__cell--today' : ''
-                const cellThisMonthClass = dates[cellIndex].isThisMonth ? 'calendar__cell--this-month' : ``
+            <div key={row} className="calendar__row">
+              {(new Array(days.length)).fill().map((_, column) => {
+                const index = row * days.length + column
+                const todayClass = this.isDateToday(dates[index]) ? 'calendar__cell--today' : ''
+                const thisMonthClass = this.isDateThisMonth(dates[index]) ? 'calendar__cell--this-month' : ``
+                const formattedDate = `${dates[index].getDate()}/${dates[index].getMonth()}/${dates[index].getFullYear()}`
                 return (
                   <div
-                    key={cellIndex}
-                    className={`calendar__cell ${cellActiveClass} ${cellThisMonthClass}`}
+                    key={index}
+                    className={`calendar__cell ${todayClass} ${thisMonthClass}`}
                     onClick={this.handleDayClick}
+                    data-date={formattedDate}
                   >
-                    {dates[cellIndex].day}
+                    {dates[index].getDate()}
                   </div>
                 )
               })}
