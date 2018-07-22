@@ -1,6 +1,6 @@
 .calendar {
   background: #eeeeee;
-  max-width: 700px;
+  max-width: 600px;
   margin: 20px auto;
 }
 
@@ -16,11 +16,90 @@
   background: #17bc9b;
 }
 
+.calendar__week {
+  padding: 10px 0;
+  text-align: center;
+  background: #dddddd;
+}
+
+.calendar__week-cell {
+  flex: 1;
+}
+
 .calendar__cell {
+  color: #999;
   flex: 1;
   text-align: center;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 7px 0;
+}
+
+.calendar__cell:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.calendar__cell--this-month {
+  color: #000;
 }
 
 .calendar__cell--today {
   background: #17bc9b;
+  color: #fff;
+}
+
+.calendar-event-form {
+  position: absolute;
+  width: 129px;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.calendar-event-form__arrow-up {
+  position: absolute;
+  top: -5px;
+  left: calc(50% - 5px);
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+}
+
+.calendar-event-form input {
+  font-size: 12px;
+}
+
+.calendar-event-form__time {
+  overflow: hidden;
+}
+
+.calendar-event-form__time input {
+  width: calc(50% - 9px);
+  float: left;
+}
+
+.calendar-event-form__time input:nth-child(2) {
+  float: right;
+}
+
+.calendar-event-form__name {
+  margin-top: 8px;
+}
+
+.calendar-event-form__name input {
+  display: block;
+  width: calc(100% - 6px);
+}
+
+.calendar-event-form button {
+  background: #dddddd;
+  padding: 6px;
+  border-radius: 3px;
+}
+
+.calendar-event-form__bottom {
+  text-align: center;
+  margin-top: 5px;
 }
