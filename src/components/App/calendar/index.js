@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import EventForm from './event-form'
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
@@ -23,9 +24,11 @@ class Calendar extends Component {
     let index = -firstDayThisMonth + 1
     do {
       let day = new Date(year, months.indexOf(month), index)
-      const today = (day.getMonth() === months.indexOf(month)) && (day.getDate() === todayDate.getDate())
+      const isThisMonth = day.getMonth() === months.indexOf(month)
+      const isToday = isThisMonth && (day.getDate() === todayDate.getDate())
       dates.push({
-        today,
+        isToday,
+        isThisMonth,
         day: day.getDate()
       })
       index++
@@ -63,17 +66,28 @@ class Calendar extends Component {
     })
   }
 
+  handleDayClick = (event) => {
+    this.setState({
+      eventFormTarget: event.target,
+      eventFormVisible: true
+    })
+  }
+
   render() {
     const dates = this.getDatesArray()
     return (
       <div className="calendar">
+        <EventForm
+          target={this.state.eventFormTarget}
+          visible={this.state.eventFormVisible}
+        />
         <div className="calendar__header">
           <div>{this.state.month}</div>
           <div>{this.state.year}</div>
           <button onClick={this.handlePrevMonth}>Prev month</button>
           <button onClick={this.handleNextMonth}>Next month</button>
-          <div className="calendar__row calendar__days">
-            {days.map(day => <div key={day} className="calendar__cell">{day}</div>)}
+          <div className="calendar__row calendar__week">
+            {days.map(day => <div key={day} className="calendar__week-cell">{day.substring(0, 2)}</div>)}
           </div>
         </div>
         {(new Array(rows)).fill().map((_, rowIndex) => {
@@ -81,9 +95,14 @@ class Calendar extends Component {
             <div key={rowIndex} className="calendar__row">
               {(new Array(days.length)).fill().map((_, columnIndex) => {
                 const cellIndex = rowIndex * days.length + columnIndex
-                const cellActiveClass = dates[cellIndex].today ? `calendar__cell--today` : ''
+                const cellActiveClass = dates[cellIndex].isToday ? 'calendar__cell--today' : ''
+                const cellThisMonthClass = dates[cellIndex].isThisMonth ? 'calendar__cell--this-month' : ``
                 return (
-                  <div key={cellIndex} className={`${cellActiveClass} calendar__cell`}>
+                  <div
+                    key={cellIndex}
+                    className={`calendar__cell ${cellActiveClass} ${cellThisMonthClass}`}
+                    onClick={this.handleDayClick}
+                  >
                     {dates[cellIndex].day}
                   </div>
                 )
