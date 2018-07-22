@@ -29,7 +29,35 @@ class Calendar extends Component {
     return dates
   }
 
+  handlePrevMonth = () => {
+    let { year, month } = this.state
+    const monthIndex = months.indexOf(month)
+    if (monthIndex === 0) {
+      year = year - 1
+      month = months[months.length - 1]
+    } else {
+      month = months[monthIndex - 1]
+    }
+    this.setState({
+      year,
+      month
+    })
+  }
 
+  handleNextMonth = () => {
+    let { year, month } = this.state
+    const monthIndex = months.indexOf(month)
+    if (monthIndex === months.length - 1) {
+      year = year + 1
+      month = months[0]
+    } else {
+      month = months[monthIndex + 1]
+    }
+    this.setState({
+      year,
+      month
+    })
+  }
 
   render() {
     const dates = this.getDatesArray()
@@ -38,6 +66,8 @@ class Calendar extends Component {
         <div className="calendar__header">
           <div>{this.state.month}</div>
           <div>{this.state.year}</div>
+          <button onClick={this.handlePrevMonth}>Prev month</button>
+          <button onClick={this.handleNextMonth}>Next month</button>
           <div className="calendar__row calendar__days">
             {days.map(day => <div key={day} className="calendar__cell">{day}</div>)}
           </div>
