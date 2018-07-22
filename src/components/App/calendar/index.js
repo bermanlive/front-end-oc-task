@@ -18,12 +18,16 @@ class Calendar extends Component {
   getDatesArray() {
     const { year, month } = this.state
     const dates = []
+    const todayDate = new Date()
     const firstDayThisMonth = new Date(year, months.indexOf(month), 1).getDay()
-    console.log(firstDayThisMonth)
-    let index = firstDayThisMonth === 0 ? 1 : -firstDayThisMonth + 1
+    let index = -firstDayThisMonth + 1
     do {
       let day = new Date(year, months.indexOf(month), index)
-      dates.push(day.getDate())
+      const today = (day.getMonth() === months.indexOf(month)) && (day.getDate() === todayDate.getDate())
+      dates.push({
+        today,
+        day: day.getDate()
+      })
       index++
     } while (dates.length !== rows * days.length)
     return dates
@@ -77,9 +81,10 @@ class Calendar extends Component {
             <div key={rowIndex} className="calendar__row">
               {(new Array(days.length)).fill().map((_, columnIndex) => {
                 const cellIndex = rowIndex * days.length + columnIndex
+                const cellActiveClass = dates[cellIndex].today ? `calendar__cell--today` : ''
                 return (
-                  <div key={cellIndex} className="calendar__cell">
-                    {dates[cellIndex]}
+                  <div key={cellIndex} className={`${cellActiveClass} calendar__cell`}>
+                    {dates[cellIndex].day}
                   </div>
                 )
               })}

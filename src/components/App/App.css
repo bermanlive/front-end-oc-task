@@ -1,5 +1,7 @@
 .calendar {
   background: #eeeeee;
+  max-width: 700px;
+  margin: 20px auto;
 }
 
 .calendar__row {
@@ -17,4 +19,8 @@
 .calendar__cell {
   flex: 1;
   text-align: center;
+}
+
+.calendar__cell--today {
+  background: #17bc9b;
 }
