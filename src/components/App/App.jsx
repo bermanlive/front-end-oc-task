@@ -7,8 +7,32 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      events: {}
+      events: this.getEventsFromStorage()
     }
+  }
+
+  getEventsFromStorage = () => {
+    const events = JSON.parse(localStorage.getItem('events'))
+    if (!events) {
+      return {}
+    }
+    console.log(Object.keys(events))
+    return Object.keys(events).reduce((parsedEvents, key) => {
+      parsedEvents[key] = events[key].map(event => {
+        event.date = new Date(event.date)
+        return event
+      })
+      return events
+    }, {})
+  }
+
+  addEventToStorage = (event) => {
+    const events = this.getEventsFromStorage()
+    if (!events[event.dateKey]) {
+      events[event.dateKey] = []
+    }
+    events[event.dateKey].push(event)
+    localStorage.setItem('events', JSON.stringify(events))
   }
 
   handleEventAdd = (event) => {
@@ -17,7 +41,10 @@ class App extends Component {
       events[event.dateKey] = []
     }
     events[event.dateKey].push(event)
-    this.setState({ events })
+    this.setState({
+      events
+    })
+    this.addEventToStorage(event)
   }
 
   render() {

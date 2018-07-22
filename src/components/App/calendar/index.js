@@ -77,6 +77,7 @@ class Calendar extends Component {
 
   handleEventSave = (event) => {
     const dateParts = event.date.split('/')
+    console.log(dateParts)
     this.props.onEventAdd({
       dateKey: `${dateParts[1]}/${dateParts[2]}`,
       date: new Date(...dateParts.reverse(), event.hour, event.minute),
