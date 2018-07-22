@@ -35,7 +35,7 @@ class Calendar extends Component {
   }
 
   isDateToday(date) {
-    return this.isDateThisMonth(date) && (date.getDate() === (new Date()).getDate())
+    return this.isDateThisMonth(new Date()) && (date.getDate() === (new Date()).getDate())
   }
 
   handlePrevMonth = () => {
