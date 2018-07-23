@@ -91,8 +91,55 @@ class Calendar extends Component {
     return events
   }
 
-  render() {
+  renderHeader() {
+    return (
+      <div className="calendar__header">
+        <div>
+          <div className="calendar__switch-month pull-left" onClick={this.handlePrevMonth}>
+            <div className="calendar__chevron left"></div>
+          </div>
+          <div className="calendar__switch-month pull-right" onClick={this.handleNextMonth}>
+            <div className="calendar__chevron right"></div>
+          </div>
+          <div className="calendar__header_middle">
+            <div>{this.state.month}</div>
+            <div>{this.state.year}</div>
+          </div>
+        </div>
+        <div className="calendar__row calendar__week">
+          {days.map(day => <div key={day} className="calendar__week-cell">{day.substring(0, 2)}</div>)}
+        </div>
+      </div>
+    )
+  }
+
+  renderCells() {
     const dates = this.getDatesArray()
+    return new Array(rows).fill().map((_, row) => {
+      return (
+        <div key={row} className="calendar__row">
+          {(new Array(days.length)).fill().map((_, column) => {
+            const index = row * days.length + column
+            const todayClass = this.isDateToday(dates[index]) ? 'calendar__cell--today' : ''
+            const thisMonthClass = this.isDateThisMonth(dates[index]) ? 'calendar__cell--this-month' : ``
+            const formattedDate = `${dates[index].getDate()}/${dates[index].getMonth()}/${dates[index].getFullYear()}`
+            return (
+              <div
+                key={index}
+                className={`calendar__cell ${todayClass} ${thisMonthClass}`}
+                onClick={this.handleDayClick}
+                data-date={formattedDate}
+              >
+                {dates[index].getDate()}
+              </div>
+            )
+          })}
+        </div>
+      )
+    })
+  }
+
+  render() {
     const eventsKey = `${months.indexOf(this.state.month)}/${this.state.year}`
     const events = this.sortEvents(this.props.events[eventsKey] || [])
     return (
@@ -102,45 +149,8 @@ class Calendar extends Component {
           visible={this.state.eventFormVisible}
           onSave={this.handleEventSave}
         />
-        <div className="calendar__header">
-          <div>
-            <div className="calendar__switch-month pull-left" onClick={this.handlePrevMonth}>
-              <div className="calendar__chevron left"></div>
-            </div>
-            <div className="calendar__switch-month pull-right" onClick={this.handleNextMonth}>
-              <div className="calendar__chevron right"></div>
-            </div>
-            <div className="calendar__header_middle">
-              <div>{this.state.month}</div>
-              <div>{this.state.year}</div>
-            </div>
-          </div>
-          <div className="calendar__row calendar__week">
-            {days.map(day => <div key={day} className="calendar__week-cell">{day.substring(0, 2)}</div>)}
-          </div>
-        </div>
-        {(new Array(rows)).fill().map((_, row) => {
-          return (
-            <div key={row} className="calendar__row">
-              {(new Array(days.length)).fill().map((_, column) => {
-                const index = row * days.length + column
-                const todayClass = this.isDateToday(dates[index]) ? 'calendar__cell--today' : ''
-                const thisMonthClass = this.isDateThisMonth(dates[index]) ? 'calendar__cell--this-month' : ``
-                const formattedDate = `${dates[index].getDate()}/${dates[index].getMonth()}/${dates[index].getFullYear()}`
-                return (
-                  <div
-                    key={index}
-                    className={`calendar__cell ${todayClass} ${thisMonthClass}`}
-                    onClick={this.handleDayClick}
-                    data-date={formattedDate}
-                  >
-                    {dates[index].getDate()}
-                  </div>
-                )
-              })}
-            </div>
-          )
-        })}
+        {this.renderHeader()}
+        {this.renderCells()}
         <div className="calendar__events-list">
           {events.map((event, index) => <Event key={`event_${index}`} {...event} />)}
         </div>
