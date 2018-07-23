@@ -5,7 +5,8 @@ class EventForm extends Component {
   state = {
     hour: '',
     minute: '',
-    name: ''
+    name: '',
+    error: false
   }
 
   handleClickOutsidePopover = (event) => {
@@ -52,23 +53,31 @@ class EventForm extends Component {
 
   handleChangeHour = (event) => {
     this.setState({
-      hour: event.target.value
+      hour: event.target.value,
+      error: false
     })
   }
 
   handleChangeMinute = (event) => {
     this.setState({
-      minute: event.target.value
+      minute: event.target.value,
+      error: false
     })
   }
 
   handleNameChange = (event) => {
     this.setState({
-      name: event.target.value
+      name: event.target.value,
+      error: false
     })
   }
 
   handleSaveButtonClick = () => {
+    if (!this.state.hour || !this.state.minute || !this.state.name) {
+      return this.setState({
+        error: 'All fiels are required!'
+      })
+    }
     this.props.onSave({
       date: this.props.target.getAttribute('data-date'),
       hour: this.state.hour,
@@ -94,6 +103,9 @@ class EventForm extends Component {
         }}
       >
         <div className="calendar__event-form__arrow-up"></div>
+        {this.state.error ?
+          <div className="calendar__event-form__error">{this.state.error}</div>
+          : ''}
         <div className="calendar__event-form__time">
           <input
             type="number"

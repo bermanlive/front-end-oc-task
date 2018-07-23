@@ -171,6 +171,11 @@ body {
   border-radius: 3px;
 }
 
+.calendar__event-form__error {
+  text-align: center;
+  color: #fff;
+}
+
 .calendar__event-form__bottom {
   text-align: center;
   margin-top: 5px;
