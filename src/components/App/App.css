@@ -122,7 +122,7 @@ body {
 
 .calendar__event-form {
   position: absolute;
-  width: 129px;
+  width: 140px;
   padding: 10px;
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.5);
@@ -141,6 +141,7 @@ body {
 
 .calendar__event-form input {
   font-size: 12px;
+  padding: 3px;
 }
 
 .calendar__event-form__time {
@@ -148,8 +149,8 @@ body {
 }
 
 .calendar__event-form__time input {
-  width: calc(50% - 9px);
   float: left;
+  width: calc(48% - 10px);
 }
 
 .calendar__event-form__time input:nth-child(2) {
@@ -162,7 +163,7 @@ body {
 
 .calendar__event-form__name input {
   display: block;
-  width: calc(100% - 6px);
+  width: calc(100% - 10px);
 }
 
 .calendar__event-form button {
