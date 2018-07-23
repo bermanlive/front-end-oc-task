@@ -94,7 +94,9 @@ class Calendar extends Component {
   }
 
   sortEvents = (events) => {
-    return events
+    return events.sort((a, b) => {
+      return new Date(b.date) - new Date(a.date)
+    })
   }
 
   renderHeader() {
