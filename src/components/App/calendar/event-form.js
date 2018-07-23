@@ -31,9 +31,16 @@ class EventForm extends Component {
     if (target) {
       const targetRect = target.getBoundingClientRect()
       const popupRect = this.ref.getBoundingClientRect()
+      let x = targetRect.x - (popupRect.width / 2) + (targetRect.width / 2)
+      if (x < 0) {
+        x = 0
+      }
+      if (x + popupRect.width > window.innerWidth) {
+        x = window.innerWidth - popupRect.width
+      }
       this.setState({
         target,
-        x: targetRect.x - (popupRect.width / 2) + (targetRect.width / 2),
+        x,
         y: targetRect.y + targetRect.height + 10
       })
     }
