@@ -120,7 +120,6 @@ class Calendar extends Component {
             {days.map(day => <div key={day} className="calendar__week-cell">{day.substring(0, 2)}</div>)}
           </div>
         </div>
-
         {(new Array(rows)).fill().map((_, row) => {
           return (
             <div key={row} className="calendar__row">

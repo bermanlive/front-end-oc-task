@@ -166,3 +166,16 @@
   text-align: center;
   margin-top: 5px;
 }
+
+.calendar__events-list {
+  padding-top: 20px;
+  background: #fff;
+}
+
+.calendar__events-list div {
+  padding: 7px;
+}
+
+.calendar__events-list div:nth-child(2n) {
+  background: #f2f2f2;
+}
