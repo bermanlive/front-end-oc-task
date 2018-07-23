@@ -16,7 +16,6 @@ class App extends Component {
     if (!events) {
       return {}
     }
-    console.log(Object.keys(events))
     return Object.keys(events).reduce((parsedEvents, key) => {
       parsedEvents[key] = events[key].map(event => {
         event.date = new Date(event.date)
