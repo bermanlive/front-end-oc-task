@@ -104,14 +104,23 @@ class Calendar extends Component {
           onSave={this.handleEventSave}
         />
         <div className="calendar__header">
-          <div>{this.state.month}</div>
-          <div>{this.state.year}</div>
-          <button onClick={this.handlePrevMonth}>Prev month</button>
-          <button onClick={this.handleNextMonth}>Next month</button>
+          <div>
+            <div className="calendar__switch-month pull-left" onClick={this.handlePrevMonth}>
+              <div className="calendar__chevron left"></div>
+            </div>
+            <div className="calendar__switch-month pull-right" onClick={this.handleNextMonth}>
+              <div className="calendar__chevron right"></div>
+            </div>
+            <div className="calendar__header_middle">
+              <div>{this.state.month}</div>
+              <div>{this.state.year}</div>
+            </div>
+          </div>
           <div className="calendar__row calendar__week">
             {days.map(day => <div key={day} className="calendar__week-cell">{day.substring(0, 2)}</div>)}
           </div>
         </div>
+
         {(new Array(rows)).fill().map((_, row) => {
           return (
             <div key={row} className="calendar__row">

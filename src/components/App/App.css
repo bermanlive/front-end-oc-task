@@ -1,3 +1,11 @@
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
 .calendar {
   background: #eeeeee;
   max-width: 600px;
@@ -13,13 +21,68 @@
 }
 
 .calendar__header {
+  text-align: center;
+  height: 203px;
   background: #17bc9b;
+  position: relative;
+  color: #fff;
+}
+
+.calendar__chevron::before {
+	border-style: solid;
+	border-width: 0.25em 0.25em 0 0;
+	content: '';
+	display: inline-block;
+	height: 0.45em;
+	left: 0.15em;
+	position: relative;
+	top: 0.15em;
+	transform: rotate(-45deg);
+	vertical-align: top;
+	width: 0.45em;
+}
+
+.calendar__chevron.left:before {
+	left: 0.25em;
+	transform: rotate(-135deg);
+}
+
+.calendar__chevron.right:before {
+	left: 0;
+	transform: rotate(45deg);
+}
+
+.calendar__switch-month {
+  width: 50px;
+  padding-top: 75px;
+  height: 90px;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.2s ease all;
+}
+
+.calendar__switch-month:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.calendar__header_middle {
+  padding-top: 60px;
+  font-size: 16px;
+}
+
+.calendar__header_middle div:nth-child(2) {
+  padding-top: 10px;
 }
 
 .calendar__week {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 10px 0;
   text-align: center;
-  background: #dddddd;
+  color: #65676a;
+  background: #ddd;
 }
 
 .calendar__week-cell {
@@ -27,7 +90,7 @@
 }
 
 .calendar__cell {
-  color: #999;
+  color: #b7b8b8;
   flex: 1;
   text-align: center;
   cursor: pointer;
@@ -40,7 +103,7 @@
 }
 
 .calendar__cell--this-month {
-  color: #000;
+  color: #646664;
 }
 
 .calendar__cell--today {
