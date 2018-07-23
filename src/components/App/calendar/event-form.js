@@ -8,7 +8,14 @@ class EventForm extends Component {
     name: ''
   }
 
+  handleClickOutsidePopover = (event) => {
+    if (!this.ref.contains(event.target)) {
+      this.props.onClickOutside()
+    }
+  }
+
   componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutsidePopover)
     window.addEventListener('resize', () => {
       this.align(this.state.target)
     })

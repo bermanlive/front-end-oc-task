@@ -87,6 +87,12 @@ class Calendar extends Component {
     })
   }
 
+  handleClickOutsidePopover = () => {
+    this.setState({
+      eventFormVisible: false
+    })
+  }
+
   sortEvents = (events) => {
     return events
   }
@@ -148,6 +154,7 @@ class Calendar extends Component {
           target={this.state.eventFormTarget}
           visible={this.state.eventFormVisible}
           onSave={this.handleEventSave}
+          onClickOutside={this.handleClickOutsidePopover}
         />
         {this.renderHeader()}
         {this.renderCells()}
