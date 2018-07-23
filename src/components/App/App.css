@@ -1,3 +1,11 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+}
+
 .pull-left {
   float: left;
 }
@@ -68,6 +76,7 @@
 .calendar__header_middle {
   padding-top: 60px;
   font-size: 16px;
+  font-weight: 400;
 }
 
 .calendar__header_middle div:nth-child(2) {
@@ -177,5 +186,7 @@
 }
 
 .calendar__events-list div:nth-child(2n) {
-  background: #f2f2f2;
+  background: #fbfafa;
+  border-top: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
 }
