@@ -12,20 +12,30 @@ class EventForm extends Component {
   handleClickOutsidePopover = (event) => {
     if (!this.ref.contains(event.target)) {
       this.props.onClickOutside()
+      this.setState({
+        error: false
+      })
     }
   }
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutsidePopover)
-    window.addEventListener('resize', () => {
-      this.align(this.state.target)
-    })
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutsidePopover)
+    window.removeEventListener('resize', this.handleResize)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.target) {
       this.align(nextProps.target)
     }
+  }
+
+  handleResize = () => {
+    this.align(this.state.target)
   }
 
   align(target) {
@@ -76,6 +86,16 @@ class EventForm extends Component {
     if (!this.state.hour || !this.state.minute || !this.state.name) {
       return this.setState({
         error: 'All fiels are required!'
+      })
+    }
+    if (Number(this.state.hour) < 0 || Number(this.state.hour) > 24) {
+      return this.setState({
+        error: 'Invalid hour value'
+      })
+    }
+    if (Number(this.state.minute) < 0 || Number(this.state.minute) > 60) {
+      return this.setState({
+        error: 'Invalid minutes value'
       })
     }
     this.props.onSave({
